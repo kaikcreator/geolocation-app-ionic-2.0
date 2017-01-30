@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Platform, NavController, NavParams } from 'ionic-angular';
+import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng } from 'ionic-native'; 
 
 /*
   Generated class for the Map page.
@@ -13,7 +14,19 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class MapPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  public map: GoogleMap;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private platform: Platform) {
+    this.platform.ready().then(()=>{
+      GoogleMap.isAvailable().then(()=>{
+        let element: HTMLElement = document.getElementById('map');
+        this.map = new GoogleMap(element);
+        this.map.one(GoogleMapsEvent.MAP_READY).then((data:any)=>{
+            //lets center map based on our position
+        })
+      })
+    })
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
