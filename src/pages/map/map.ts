@@ -23,8 +23,10 @@ export class MapPage {
         this.map = new GoogleMap(element);
         this.map.one(GoogleMapsEvent.MAP_READY).then((data:any)=>{
             //lets center map based on our position
+            let myPosition = new GoogleMapsLatLng(41.390295, 2.154007);
+            this.map.animateCamera({ target: myPosition,zoom: 10})
         })
-      })
+      }).catch(()=>alert("GoogleMap is not available"))
     })
   }
 
