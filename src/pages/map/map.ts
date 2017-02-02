@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform, NavController, NavParams } from 'ionic-angular';
-import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng } from 'ionic-native'; 
+import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, Geolocation } from 'ionic-native'; 
 
 /*
   Generated class for the Map page.
@@ -23,8 +23,14 @@ export class MapPage {
         this.map = new GoogleMap(element);
         this.map.one(GoogleMapsEvent.MAP_READY).then((data:any)=>{
             //lets center map based on our position
-            let myPosition = new GoogleMapsLatLng(41.390295, 2.154007);
-            this.map.animateCamera({ target: myPosition,zoom: 10})
+            Geolocation.getCurrentPosition().then(pos => {
+              let myPosition = new GoogleMapsLatLng(pos.coords.latitude, pos.coords.longitude);
+              this.map.animateCamera({ target: myPosition,zoom: 10});
+            this.map.addMarker({
+              'position': myPosition,
+              'title': 'you are here!'
+            })
+            })
         })
       }).catch(()=>alert("GoogleMap is not available"))
     })
