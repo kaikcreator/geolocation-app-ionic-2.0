@@ -1,3 +1,13 @@
 page-map {
 
 }
+
+#map{
+    width: 100%;
+    height: 100%;
+}
+
+//trick to prevent ionic navigator nav-decor div to cause a black screen
+ion-app._gmaps_cdv_ .nav-decor{
+    display: none !important;
+}
